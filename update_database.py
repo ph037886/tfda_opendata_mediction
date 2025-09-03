@@ -158,7 +158,7 @@ def df_to_sql(df):
     c.execute(create_query)
     conn.commit()
     df.to_sql(table_name, conn, if_exists='replace', index=False) 
-    c.close()    
+    c.close()
     
 def download_and_to_sql():
     download_new_source_and_update()
