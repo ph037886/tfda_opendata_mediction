@@ -1,10 +1,16 @@
 import streamlit as st
 import sql_control
+import pandas as pd
 
-def search_event(keyword):
-    global final_result_container, option
+def choose_box(keyword, option):
     df=sql_control.pd_read_sql(sql_control.search_medication_by_something(option, keyword))
-    final_result_container.dataframe(df)
+    df=df.drop_duplicates(subset=['許可證字號'])
+
+def search_event(keyword, option):
+    global final_result_container, search_result_container
+    search_result_container.wt('查詢結果：商品名 (學名)')
+
+#final_result_container.dataframe(df)
     
 
 #以下開始streamlit語法
@@ -22,6 +28,6 @@ st.write('網站內容資料來自政府開放平台')
 st.write('Design by 國軍左營總醫院 臨床藥劑科 方志文 藥師')
 
 if keyword:
-    search_event(keyword)
+    search_event(keyword, option)
 if search_button:
-    search_event(keyword)
+    search_event(keyword, option)
