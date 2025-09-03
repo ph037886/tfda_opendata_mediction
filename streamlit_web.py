@@ -1,9 +1,10 @@
 import streamlit as st
+import sql_control
 
 def search_event(keyword):
     global final_result_container, option
-    final_result_container.write(option)
-    final_result_container.write(keyword)
+    df=sql_control.pd_read_sql(sql_control.search_medication_by_something(option, keyword))
+    final_result_container.dataframe(df)
     
 
 #以下開始streamlit語法
