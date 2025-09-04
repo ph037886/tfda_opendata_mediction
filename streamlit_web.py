@@ -1,14 +1,23 @@
 import streamlit as st
-import sql_control
+import view_streamlit as vs
 import pandas as pd
 
-def choose_box(keyword, option):
-    df=sql_control.pd_read_sql(sql_control.search_medication_by_something(option, keyword))
-    df=df.drop_duplicates(subset=['許可證字號'])
+def choose_box(args):
+    global final_result_container
+    final_result_container.empty()
+    final_result_container.write(args[0])
+
 
 def search_event(keyword, option):
-    global final_result_container, search_result_container
-    search_result_container.wt('查詢結果：商品名 (學名)')
+    global search_result_container,final_result_container
+    search_result_container.empty() #清空本來的container
+    final_result_container.empty()
+    df=vs.choose_button(option, keyword)
+    i=0
+    while i < len(df.columns.to_list()):
+        locals()['number'+str(i)] =search_result_container.button(df.iloc[i,2] + '(' +df.iloc[i,3]+')',key=i,help=df.iloc[i,3],on_click=choose_medication_event,args=(df.iloc[i,0],))
+        i+=1
+    search_result_container.markdown("""---""")
 
 #final_result_container.dataframe(df)
     
