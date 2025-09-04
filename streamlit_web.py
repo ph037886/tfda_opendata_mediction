@@ -5,7 +5,9 @@ import pandas as pd
 def choose_box(args):
     global final_result_container
     final_result_container.empty()
-    final_result_container.write(args[0])
+    final_result_container.write(args)
+    df=vs.final_result(args)
+    final_result_container.dataframe(df)
 
 
 def search_event(keyword, option):
