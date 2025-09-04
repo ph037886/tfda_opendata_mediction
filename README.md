@@ -1,3 +1,6 @@
+# 2025/9/4 新增
+嘗試用stream建立簡易的查詢功能
+
 # tfda_opendata_mediction
 
 下載台灣FDA的opendata，並製成Sqlite資料庫，細部資料的部分因為檔案很大gitgub不支援，無法上傳，程式執行就會自動產生最新的資料

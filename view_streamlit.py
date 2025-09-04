@@ -8,6 +8,6 @@ def choose_button(column, keyword):
 
 def final_result(license_code):
     df=sql_control.pd_read_sql(sql_control.search_for_streamlit(license_code))
-    df=df[df['支付價']!=0]
+    df=df[df['支付價']!='0.00']
     df=df.iloc[0]
     return df

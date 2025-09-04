@@ -12,14 +12,17 @@ def choose_box(args):
 
 def search_event(keyword, option):
     global search_result_container,final_result_container
-    search_result_container.empty() #清空本來的container
-    final_result_container.empty()
-    df=vs.choose_button(option, keyword)
-    i=0
-    while i < len(df.columns.to_list()):
-        locals()['number'+str(i)] =search_result_container.button(df.iloc[i,2] + '(' +df.iloc[i,3]+')',key=i,help=df.iloc[i,3],on_click=choose_box,args=(df.iloc[i,0],))
-        i+=1
-    search_result_container.markdown("""---""")
+    if keyword=='':
+        pass
+    else:
+        search_result_container.empty() #清空本來的container
+        final_result_container.empty()
+        df=vs.choose_button(option, keyword)
+        i=0
+        while i < len(df.columns.to_list()):
+            locals()['number'+str(i)] =search_result_container.button(df.iloc[i,2] + '(' +df.iloc[i,3]+')',key=i,help=df.iloc[i,3],on_click=choose_box,args=(df.iloc[i,0],))
+            i+=1
+        search_result_container.markdown("""---""")
 
 #final_result_container.dataframe(df)
     
@@ -32,8 +35,9 @@ option = st.selectbox('查詢欄位',('全部欄位','許可證字號','英文�
 keyword=st.text_input('請輸入關鍵字')
 search_button=st.button('搜尋',type="primary")
 st.markdown("""---""")
-final_result_container=st.container()
 search_result_container=st.container()
+final_result_container=st.container()
+
 
 st.write('網站內容資料來自政府開放平台')
 st.write('Design by 國軍左營總醫院 臨床藥劑科 方志文 藥師')
