@@ -1,7 +1,7 @@
 import sqlite3
 import pandas as pd
 
-conn = sqlite3.connect('files/med_info.db')
+conn = sqlite3.connect('files/med_info.db',check_same_thread=False)
 cur=conn.cursor()
 
 def do_sql(sql):
