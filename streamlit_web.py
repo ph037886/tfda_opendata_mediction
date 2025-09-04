@@ -19,8 +19,8 @@ def search_event(keyword, option):
         final_result_container.empty()
         df=vs.choose_button(option, keyword)
         i=0
-        while i < len(df.columns.to_list()):
-            locals()['number'+str(i)] =search_result_container.button(df.iloc[i,2] + '(' +df.iloc[i,3]+')',key=i,help=df.iloc[i,3],on_click=choose_box,args=(df.iloc[i,0],))
+        while i < len(df):
+            locals()['number'+str(i)] =search_result_container.button(df.iloc[i,1] + '(' +df.iloc[i,2]+')',key=i,help=df.iloc[i,3],on_click=choose_box,args=(df.iloc[i,0],))
             i+=1
         search_result_container.markdown("""---""")
 
