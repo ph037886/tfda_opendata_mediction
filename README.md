@@ -1,5 +1,6 @@
 # 2025/9/4 新增
 嘗試用stream建立簡易的查詢功能
+https://tfdaopendatamediction-63gspzt4efzntvblseus9p.streamlit.app/
 
 # tfda_opendata_mediction
 
