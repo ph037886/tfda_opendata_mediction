@@ -1,7 +1,7 @@
+import asyncio
 from googletrans import Translator
 
-def trans_to_chinese_by_google(txt):
-    
-    translator = Translator()
-    result = translator.translate(txt, dest='zh-tw')
+async def translate_text(txt):
+    async with Translator() as translator:
+        result = await translator.translate(str(txt), dest='zh')
     return result.text
