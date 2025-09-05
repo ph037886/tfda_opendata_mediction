@@ -10,8 +10,6 @@ def choose_button(column, keyword):
 def final_result(license_code):
     df=sql_control.pd_read_sql(sql_control.search_for_streamlit(license_code))
     df=df[df['支付價']!='0.00']
-    #df['ATC_CODE中文翻譯']=df.apply(lambda row:translate_google.translate_text(row['ATC_CODE英文']), axis=1)
-    df.apply(lambda row: print(row['ATC_CODE英文']), axis=1)
-    print(df['ATC_CODE英文'])
+    df['ATC_CODE中文翻譯']=df.apply(lambda row:translate_google.translate_text(row['ATC_CODE英文']), axis=1)
     df=df.iloc[0]
     return df
