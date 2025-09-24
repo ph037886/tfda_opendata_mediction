@@ -1,6 +1,5 @@
-import argostranslate.package
-import argostranslate.translate
 import argostranslate
+import pathlib
 
 def update_argos():
     
@@ -59,9 +58,8 @@ def trans_with_argos_offline(from_lang, to_lang, text):
     from_code = lang_name_to_code[from_lang]
     to_code = lang_name_to_code[to_lang]
     argosmodel_path='files/argosmodel/'
-    argosmodel_path=argosmodel_path + dict_argosmodel_path[from_code+'_'+to_code]
-    
-    argostranslate.package.install_from_path(argosmodel_path)
+    argosmodel_path=argosmodel_path + dict_argosmodel_path(from_code+'_'+to_code)
+    package_path = pathlib.Path(argosmodel_path)
+    argostranslate.package.install_from_path(package_path)
     translatedText = argostranslate.translate.translate(text, from_code, to_code)
     return translatedText
-    
