@@ -53,6 +53,12 @@ def lang_code_map():
                        '簡體中文':'zh'}
     return lang_name_to_code
 
+def post_process(text):
+    term_map = {'抑制剂': '抑制劑', '炎症': '發炎'}  # 只是示意
+    for k, v in term_map.items():
+        text = text.replace(k, v)
+    return text
+
 def trans_with_argos_offline(from_lang, to_lang, text):
     lang_name_to_code=lang_code_map()
     from_code = lang_name_to_code[from_lang]
@@ -63,6 +69,7 @@ def trans_with_argos_offline(from_lang, to_lang, text):
     if to_code=='zt':
         cc=OpenCC('s2twp') #argos轉換出來會簡繁夾雜，使用opencc做簡繁體轉換
         translatedText=cc.convert(translatedText)
+        #post_process(translatedText) #後處理器，可以用於一些特殊字詞修改，未實裝
     return translatedText
 
 if __name__=='__main__':
@@ -85,8 +92,3 @@ if __name__=='__main__':
     txt=input('請輸入文字：')
     print('\n翻譯中，請稍後~\n')
     print(trans_with_argos_offline(in_lang, out_lang, txt))
-    
-    
-        
-        
-    
