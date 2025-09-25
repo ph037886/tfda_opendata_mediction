@@ -20,7 +20,7 @@ def ensure_package_installed(package_path: str):
     # 依需要檢查是否已安裝對應語對；簡化處理：直接安裝一次即可（已裝會跳過）
     argostranslate.package.install_from_path(package_path)
 
-def offline_argosmodel_install(from_code, to_code):
+def offline_argosmodel_install(lang_code):
     #argosmodel網址：https://www.argosopentech.com/argospm/index/
     from_to_argosmodel={'en_ja':'translate-en_ja-1_1.argosmodel',
                         'en_ko':'translate-en_ko-1_1.argosmodel',
@@ -31,10 +31,18 @@ def offline_argosmodel_install(from_code, to_code):
                         'th_en':'translate-th_en-1_9.argosmodel',
                         'zt_en':'translate-zt_en-1_9.argosmodel',
                         'zh_en':'translate-zh_en-1_9.argosmodel'}
-    argosmodel_path='files/argosmodel/'
-    argosmodel_path=argosmodel_path + from_to_argosmodel[from_code+'_'+to_code]
+    argosmodel_path='files/argosmodel/'     
+    argosmodel_path=argosmodel_path + from_to_argosmodel[lang_code]
     package_path = pathlib.Path(argosmodel_path)
     argostranslate.package.install_from_path(package_path)
+        
+def check_install_choose(from_code, to_code):
+    if (from_code!='en') and (to_code!='en'):
+        print('非直接翻譯語言，為原始語言翻譯為英文，再由英文翻譯為目標語言。\n')
+        offline_argosmodel_install(from_code+'_en')
+        offline_argosmodel_install('en_'+to_code)
+    else:
+        offline_argosmodel_install(from_code+'_'+to_code)
 
 def lang_code_map():
     lang_name_to_code={'正體中文':'zt',
@@ -49,10 +57,12 @@ def trans_with_argos_offline(from_lang, to_lang, text):
     lang_name_to_code=lang_code_map()
     from_code = lang_name_to_code[from_lang]
     to_code = lang_name_to_code[to_lang]
-    offline_argosmodel_install(from_code, to_code)
+    #offline_argosmodel_install(from_code, to_code)
+    check_install_choose(from_code, to_code)
     translatedText = argostranslate.translate.translate(text, from_code, to_code)
-    cc=OpenCC('s2twp') #argos轉換出來會簡繁夾雜，使用opencc做簡繁體轉換
-    translatedText=cc.convert(translatedText)
+    if to_code=='zt':
+        cc=OpenCC('s2twp') #argos轉換出來會簡繁夾雜，使用opencc做簡繁體轉換
+        translatedText=cc.convert(translatedText)
     return translatedText
 
 if __name__=='__main__':
